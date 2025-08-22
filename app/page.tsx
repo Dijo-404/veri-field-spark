@@ -42,7 +42,7 @@ const LandingPage = () => {
         <div className="absolute inset-0 network-mesh opacity-30"></div>
         <div className="absolute inset-0 opacity-20">
           <Image
-            src="https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg"
+            src="/placeholder.svg"
             alt="Network visualization"
             fill
             className="object-cover"
