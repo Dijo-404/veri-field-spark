@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -10,10 +11,21 @@ import {
   CheckCircle,
   DollarSign,
   Eye,
-  Download
+  Download,
+  Sparkles,
+  User
 } from "lucide-react";
+import AISuggestionBox from "@/components/AISuggestionBox";
+import ActivityTracker from "@/components/ActivityTracker";
+import UserProfile from "@/components/UserProfile";
+import CreditsSystem from "@/components/CreditsSystem";
+import AnimatedBackground from "@/components/AnimatedBackground";
 
 const Dashboard = () => {
+  const [aiSuggestionsOpen, setAiSuggestionsOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("overview");
+  const [currentCredits, setCurrentCredits] = useState(2847);
+
   // Mock user data
   const userStats = {
     totalDatasets: 12,
@@ -56,8 +68,9 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen bg-background relative">
+      <AnimatedBackground />
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-foreground mb-2">Creator Dashboard</h1>
@@ -116,12 +129,24 @@ const Dashboard = () => {
         </div>
 
         {/* Main Content */}
-        <Tabs defaultValue="datasets" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="datasets">My Datasets</TabsTrigger>
-            <TabsTrigger value="earnings">Earnings</TabsTrigger>
-            <TabsTrigger value="activity">Recent Activity</TabsTrigger>
-          </TabsList>
+        <div className="grid lg:grid-cols-4 gap-6">
+          {/* Main Dashboard */}
+          <div className="lg:col-span-3">
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+              <TabsList className="grid w-full grid-cols-5">
+                <TabsTrigger value="overview">Overview</TabsTrigger>
+                <TabsTrigger value="datasets">Datasets</TabsTrigger>
+                <TabsTrigger value="earnings">Earnings</TabsTrigger>
+                <TabsTrigger value="profile">Profile</TabsTrigger>
+                <TabsTrigger value="activity">Activity</TabsTrigger>
+              </TabsList>
+
+          <TabsContent value="overview" className="space-y-6">
+            <CreditsSystem 
+              currentCredits={currentCredits}
+              onCreditsChange={setCurrentCredits}
+            />
+          </TabsContent>
 
           <TabsContent value="datasets" className="space-y-6">
             <div className="flex items-center justify-between">
@@ -246,7 +271,28 @@ const Dashboard = () => {
               </CardContent>
             </Card>
           </TabsContent>
+
+          <TabsContent value="profile" className="space-y-6">
+            <UserProfile />
+          </TabsContent>
+
+          <TabsContent value="activity" className="space-y-6">
+            <ActivityTracker />
+          </TabsContent>
         </Tabs>
+          </div>
+
+          {/* Sidebar */}
+          <div className="lg:col-span-1 space-y-6">
+            <ActivityTracker />
+          </div>
+        </div>
+
+        {/* AI Suggestion Box */}
+        <AISuggestionBox 
+          isOpen={aiSuggestionsOpen}
+          onToggle={() => setAiSuggestionsOpen(!aiSuggestionsOpen)}
+        />
       </div>
     </div>
   );

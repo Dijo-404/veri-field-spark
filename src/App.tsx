@@ -10,6 +10,7 @@ import UploadPage from "./pages/UploadPage";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
 
+
 const queryClient = new QueryClient();
 
 const App = () => (
