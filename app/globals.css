@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* VeriField Design System - Binance-inspired Web3 Theme
+All colors are HSL values for optimal theme support
+*/
+
+@layer base {
+  :root {
+    /* Core VeriField Colors */
+    --background: 220 25% 4%;        /* #0B0E11 - Deep black */
+    --background-secondary: 220 14% 10%; /* #181A20 - Dark grey */
+    --foreground: 0 0% 100%;          /* #FFFFFF - Pure white */
+    --foreground-muted: 0 0% 69%;     /* #B0B0B0 - Muted grey */
+
+    /* Card System */
+    --card: 220 14% 10%;              /* Dark grey cards */
+    --card-foreground: 0 0% 100%;     /* White text on cards */
+    --card-hover: 220 14% 12%;        /* Slightly lighter on hover */
+
+    /* Popover & Dialogs */
+    --popover: 220 14% 10%;
+    --popover-foreground: 0 0% 100%;
+
+    /* VeriField Yellow - Binance Inspired */
+    --primary: 45 100% 57%;           /* #F3BA2F - Binance yellow */
+    --primary-foreground: 220 25% 4%; /* Dark text on yellow */
+    --primary-glow: 45 100% 65%;      /* Lighter yellow for glow effects */
+
+    /* Secondary Actions */
+    --secondary: 220 14% 15%;         /* Dark grey for secondary buttons */
+    --secondary-foreground: 0 0% 100%;
+
+    /* Muted Elements */
+    --muted: 220 14% 12%;             /* Subtle backgrounds */
+    --muted-foreground: 0 0% 69%;     /* Muted text */
+
+    /* Accent Colors */
+    --accent: 45 100% 57%;            /* Yellow accent */
+    --accent-foreground: 220 25% 4%;
+
+    /* Status Colors */
+    --success: 120 100% 40%;          /* Green for verified */
+    --success-foreground: 0 0% 100%;
+    --warning: 45 100% 57%;           /* Yellow for pending */
+    --warning-foreground: 220 25% 4%;
+    --destructive: 0 84% 60%;         /* Red for errors */
+    --destructive-foreground: 0 0% 100%;
+
+    /* Interactive Elements */
+    --border: 220 14% 15%;            /* Subtle borders */
+    --input: 220 14% 12%;             /* Input backgrounds */
+    --input-border: 220 14% 20%;      /* Input borders */
+    --ring: 45 100% 57%;              /* Yellow focus rings */
+
+    /* VeriField Specific */
+    --verified-badge: 120 100% 40%;   /* Green verification */
+    --pending-badge: 45 100% 57%;     /* Yellow pending */
+    --gradient-primary: linear-gradient(135deg, hsl(45 100% 57%), hsl(45 100% 65%));
+    --gradient-card: linear-gradient(145deg, hsl(220 14% 10%), hsl(220 14% 12%));
+    --glow-yellow: 0 0 20px hsl(45 100% 57% / 0.3);
+    --glow-yellow-strong: 0 0 30px hsl(45 100% 57% / 0.5);
+
+    --radius: 1rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-inter;
+  }
+}
+
+@layer components {
+  /* VeriField Component Styles */
+  .verifield-card {
+    @apply bg-card border border-border rounded-2xl shadow-lg hover:border-primary/20 transition-all duration-300;
+  }
+
+  .verifield-card:hover {
+    box-shadow: var(--glow-yellow);
+  }
+
+  .hero-glow {
+    box-shadow: var(--glow-yellow-strong);
+  }
+
+  .gradient-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .network-mesh {
+    background: radial-gradient(circle at 20% 80%, hsl(45 100% 57% / 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, hsl(45 100% 57% / 0.1) 0%, transparent 50%);
+  }
+
+  .upload-zone {
+    @apply border-2 border-dashed border-border rounded-2xl bg-muted/50 transition-all duration-300;
+  }
+
+  .upload-zone:hover {
+    @apply border-primary/50 bg-primary/5;
+  }
+
+  .status-verified {
+    @apply bg-success/10 text-success border border-success/20 rounded-full px-3 py-1 text-sm font-medium;
+  }
+
+  .status-pending {
+    @apply bg-warning/10 text-warning border border-warning/20 rounded-full px-3 py-1 text-sm font-medium;
+  }
+}
