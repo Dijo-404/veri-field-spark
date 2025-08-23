@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  address   String   @unique
+  createdAt DateTime @default(now())
+}
+
+model Dataset {
+  id          Int      @id @default(autoincrement())
+  tokenId     Int      @unique
+  owner       String
+  name        String
+  domain      String
+  tags        String
+  cid         String
+  licenseUri  String
+  sha256sum   String
+  verified    Boolean  @default(false)
+  buyersCount Int      @default(0)
+  price       BigInt?
+  createdAt   DateTime @default(now())
+}
+
+model Purchase {
+  id        String   @id @default(cuid())
+  tokenId   Int
+  buyer     String
+  amount    BigInt
+  txHash    String
+  createdAt DateTime @default(now())
+}
+
+model CreditLedger {
+  id        String   @id @default(cuid())
+  address   String
+  delta     BigInt
+  reason    String
+  createdAt DateTime @default(now())
+}
+
+model Activity {
+  id        String   @id @default(cuid())
+  address   String
+  type      String
+  date      DateTime @default(now())
+  tokenId   Int?
+}
+
+model Ownership {
+  id        String   @id @default(cuid())
+  address   String
+  tokenId   Int
+  createdAt DateTime @default(now())
+}
