@@ -17,6 +17,9 @@ contract DataNFT is ERC721, Ownable {
     uint256 private _tokenIdCounter;
     mapping(uint256 => Dataset) private _datasets;
 
+    event Minted(uint256 indexed tokenId, address indexed to);
+    event Verified(uint256 indexed tokenId, bool verified);
+
     constructor() ERC721("DataNFT", "DATA") Ownable(msg.sender) {}
 
     function mint(address to, Dataset calldata meta) external returns (uint256 tokenId) {
@@ -24,6 +27,7 @@ contract DataNFT is ERC721, Ownable {
         tokenId = _tokenIdCounter;
         _safeMint(to, tokenId);
         _datasets[tokenId] = meta;
+        emit Minted(tokenId, to);
         return tokenId;
     }
 
@@ -37,6 +41,7 @@ contract DataNFT is ERC721, Ownable {
         // The _exists check is removed.
         // The owner of the contract is responsible for calling this on existing tokens.
         _datasets[tokenId].verified = v;
+        emit Verified(tokenId, v);
     }
 
     // The following functions are overrides required by Solidity.

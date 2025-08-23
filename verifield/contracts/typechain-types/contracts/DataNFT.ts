@@ -78,8 +78,10 @@ export interface DataNFTInterface extends Interface {
     nameOrSignatureOrTopic:
       | "Approval"
       | "ApprovalForAll"
+      | "Minted"
       | "OwnershipTransferred"
       | "Transfer"
+      | "Verified"
   ): EventFragment;
 
   encodeFunctionData(
@@ -241,6 +243,19 @@ export namespace ApprovalForAllEvent {
   export type LogDescription = TypedLogDescription<Event>;
 }
 
+export namespace MintedEvent {
+  export type InputTuple = [tokenId: BigNumberish, to: AddressLike];
+  export type OutputTuple = [tokenId: bigint, to: string];
+  export interface OutputObject {
+    tokenId: bigint;
+    to: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
 export namespace OwnershipTransferredEvent {
   export type InputTuple = [previousOwner: AddressLike, newOwner: AddressLike];
   export type OutputTuple = [previousOwner: string, newOwner: string];
@@ -265,6 +280,19 @@ export namespace TransferEvent {
     from: string;
     to: string;
     tokenId: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace VerifiedEvent {
+  export type InputTuple = [tokenId: BigNumberish, verified: boolean];
+  export type OutputTuple = [tokenId: bigint, verified: boolean];
+  export interface OutputObject {
+    tokenId: bigint;
+    verified: boolean;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -520,6 +548,13 @@ export interface DataNFT extends BaseContract {
     ApprovalForAllEvent.OutputObject
   >;
   getEvent(
+    key: "Minted"
+  ): TypedContractEvent<
+    MintedEvent.InputTuple,
+    MintedEvent.OutputTuple,
+    MintedEvent.OutputObject
+  >;
+  getEvent(
     key: "OwnershipTransferred"
   ): TypedContractEvent<
     OwnershipTransferredEvent.InputTuple,
@@ -532,6 +567,13 @@ export interface DataNFT extends BaseContract {
     TransferEvent.InputTuple,
     TransferEvent.OutputTuple,
     TransferEvent.OutputObject
+  >;
+  getEvent(
+    key: "Verified"
+  ): TypedContractEvent<
+    VerifiedEvent.InputTuple,
+    VerifiedEvent.OutputTuple,
+    VerifiedEvent.OutputObject
   >;
 
   filters: {
@@ -557,6 +599,17 @@ export interface DataNFT extends BaseContract {
       ApprovalForAllEvent.OutputObject
     >;
 
+    "Minted(uint256,address)": TypedContractEvent<
+      MintedEvent.InputTuple,
+      MintedEvent.OutputTuple,
+      MintedEvent.OutputObject
+    >;
+    Minted: TypedContractEvent<
+      MintedEvent.InputTuple,
+      MintedEvent.OutputTuple,
+      MintedEvent.OutputObject
+    >;
+
     "OwnershipTransferred(address,address)": TypedContractEvent<
       OwnershipTransferredEvent.InputTuple,
       OwnershipTransferredEvent.OutputTuple,
@@ -577,6 +630,17 @@ export interface DataNFT extends BaseContract {
       TransferEvent.InputTuple,
       TransferEvent.OutputTuple,
       TransferEvent.OutputObject
+    >;
+
+    "Verified(uint256,bool)": TypedContractEvent<
+      VerifiedEvent.InputTuple,
+      VerifiedEvent.OutputTuple,
+      VerifiedEvent.OutputObject
+    >;
+    Verified: TypedContractEvent<
+      VerifiedEvent.InputTuple,
+      VerifiedEvent.OutputTuple,
+      VerifiedEvent.OutputObject
     >;
   };
 }
